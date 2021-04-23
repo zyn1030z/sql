@@ -76,34 +76,38 @@ Chương 8:
    from EMP e inner join EMP m on e.MGR = m.EMPNO
 
 Chương 10:
-1.create table PROJECT(PROJID number(4,0),P_DESC varchar2(20 char),P_START_DATE date,P_END_DATE date,BUDGET_AMOUNT number(7,2),
-  MAX_NO_STAFF number(2,0),check (P_END_DATE > P_START_DATE),
+1.create table PROJECT(PROJID smallint,P_DESC varchar(20),P_START_DATE timestamp(0),P_END_DATE timestamp(0),BUDGET_AMOUNT decimal(7,2),
+  MAX_NO_STAFF smallint,check (P_END_DATE > P_START_DATE),
   constraint "PROJECT_pk" primary key(PROJID));
 2. CREATE TABLE ASSIGNMENTS
    (
-    "PROJID"       NUMBER(4, 0) NOT NULL ENABLE,
-    "EMPNO"        NUMBER(4, 0) NOT NULL ENABLE,
-    "A_START_DATE" DATE,
-    "A_END_DATE"   DATE,
-    "BILL_AMOUNT"  NUMBER(4, 2),
-    "ASSIGN_TYPE"  VARCHAR2(2 CHAR),
-    CONSTRAINT "ASSIGNMENTS_EMP_FK1" FOREIGN KEY ("EMPNO") REFERENCES "EMP" ("EMPNO") ON
-        DELETE CASCADE ENABLE,
-    CONSTRAINT "ASSIGNMENTS_PROJECT_FK1" FOREIGN KEY ("PROJID") REFERENCES "PROJECT" ("PROJID") ON
-        DELETE CASCADE ENABLE);
+    "PROJID"       SMALLINT NOT NULL,
+    "EMPNO"        SMALLINT NOT NULL,
+    "A_START_DATE" TIMESTAMP(0),
+    "A_END_DATE"   TIMESTAMP(0),
+    "BILL_AMOUNT"  DECIMAL(4, 2),
+    "ASSIGN_TYPE"  VARCHAR(2),
+    CONSTRAINT "ASSIGNMENTS_EMP_FK1" FOREIGN KEY ("EMPNO") REFERENCES "emp" ("empno") ON
+        DELETE CASCADE,
+    CONSTRAINT "ASSIGNMENTS_PROJECT_FK1" FOREIGN KEY ("PROJID") REFERENCES "project" ("projid") ON
+        DELETE CASCADE);
+
 Chương 11:
-1. alter table ASSIGNMENTS add(HOURS DECIMAL);
-   alter table PROJECT add(COMMENTS INT);
+1. alter table ASSIGNMENTS add HOURS DECIMAL;
+   alter table PROJECT add COMMENTS INT;
 2. DESCRIBE USER_OBJECTS;
-3. alter table ASSIGNMENTS MODIFY(PROJID UNIQUE );
-   ALTER TABLE ASSIGNMENTS MODIFY(EMPNO UNIQUE );
-4. SELECT * FROM USER_CONSTRAINTS;
+3. ALTER TABLE assignments ADD CONSTRAINT constraint_name UNIQUE ("PROJID");
+   ALTER TABLE assignments ADD CONSTRAINT constraint_name UNIQUE ("EMPNO");
+4. 
+	select *
+	from information_schema.table_constraints
+	where table_name= 'assignments';
 5. SELECT TABLE_NAME FROM USER_TABLES;
    
 Chương 12:
 1.INSERT INTO PROJECT(PROJID, P_DESC, P_START_DATE, P_END_DATE, BUDGET_AMOUNT, MAX_NO_STAFF)
   VALUES ('1', 'WRITE C030 COURSE', to_date('02-JAN-88', 'DD-MON-RR'), to_date('07-JAN-88', 'DD-MON-RR'), '500', '1');
-
+  
   insert into PROJECT(projid, p_desc, p_start_date, p_end_date, budget_amount, max_no_staff)
   values ('3', 'PROOF READ NOTES', to_date('01-JAN-89', 'DD-MON-RR'), to_date('10-JAN-89', 'DD-MON-RR'), '600', '1');
 2. insert into ASSIGNMENTS(PROJID,EMPNO,A_START_DATE,A_END_DATE,BILL_AMOUNT,ASSIGN_TYPE,HOURS)
