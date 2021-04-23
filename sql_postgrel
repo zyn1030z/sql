@@ -119,3 +119,65 @@ Chương 12:
    insert into ASSIGNMENTS(PROJID,EMPNO,A_START_DATE,A_END_DATE,BILL_AMOUNT,ASSIGN_TYPE,HOURS)
    values('2','7844',to_date('04-JAN-88','DD-MON-RR'),to_date('10-JAN-88','DD-MON-RR'),'45.05','WR','30');
 3. UPDATE ASSIGNMENTS SET ASSIGN_TYPE='wr' WHERE ASSIGN_TYPE = 'wt'
+
+Chương 13:
+1.        create index projid_index on ASSIGNMENTS(PROJID);
+2.	  select e.empno,e.ename,e.job,m.mgr,e.hiredate,e.sal,e.comm,e.deptno
+	  from EMP e join EMP m on e.mgr=m.empno
+	  where m.mgr =(select mgr from EMP where ename='&ename');
+	  
+Chương 14:
+1. 
+	create OR REPLACE view aggredates (deptno, avgsalary, maximun, minimun, sumsal, no_sals, no_comms)
+	as
+	select deptno,
+	       round(avg(sal), 3),
+	       max(sal),
+	       min(sal),
+	       sum(sal),
+	       count(*),
+	       sum(case when comm is null then 0 when comm is not null then 1 end)
+	from emp
+	group by deptno;
+2. 
+	create view checkviewassignments
+	as
+	Select *
+	From assignments
+	Where "PROJID" < 2
+	  AND "A_START_DATE" < "A_END_DATE";
+3. 
+	Create table MESSAGES
+	(
+	    numcol1  decimal(9, 2),
+	    Numcol2  decimal(9, 2),
+	    Charcol1 varchar(60),
+	    Charcol2 varchar(60),
+	    Datecol1 timestamp(0),
+	    Datecol2 timestamp(0)
+	);
+   
+Chương 18:
+1. 	DECLARE
+	    CURSOR CHECK_JOB IS
+		SELECT JOB
+		FROM EMP;
+	    vjob   EMP.Job%TYPE;
+	    vcount NUMBER := 0;
+	BEGIN
+	    OPEN CHECK_JOB;
+	    LOOP
+		FETCH CHECK_JOB INTO vjob;
+		EXIT WHEN CHECK_JOB%NOTFOUND;
+		IF vjob = '&job_input' THEN
+		    vcount := vcount + 1;
+		END IF;
+	    END LOOP;
+	    IF vcount > 0 THEN
+	    INSERT INTO MESSAGES VALUES (0, 1, 'FOUNDED ' || vcount, 'JOB :' || '&job_input', sysdate, sysdate);
+	    ELSE
+		INSERT INTO MESSAGES VALUES (0, 0, 'NOT FOUND ' || vcount, 'JOB :' || '&job_input', sysdate, sysdate);
+	    END IF;
+	    CLOSE CHECK_JOB;
+	 COMMIT;
+	END;
