@@ -181,3 +181,4 @@ Chương 18:
 	    CLOSE CHECK_JOB;
 	 COMMIT;
 	END;
+2.
