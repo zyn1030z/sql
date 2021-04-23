@@ -65,3 +65,30 @@ Chương 6:
     Where Extract (Year From HireDate) = 1990 );
 12. select e.ename emp_name,to_char(e.hiredate,'DD-MM-YYYY') emp_hiredate,m.ename mgr_name, to_char(m.hiredate,'DD-MM-YYYY') mgr_hiredate  	from emp e,emp m where e.mgr=m.empno and e.hiredate
 
+Chương 8:
+1. select e.ename, to_char(e.HIREDATE,'dd-mm-yyyy') emp_hiredate, m.ENAME mgr_name, to_char(m.HIREDATE,'dd-mm-yyyy') mgr_hiredate from EMP e, EMP m where e.MGR = m.EMPNO
+2. select job,max(sal) from emp group by job;
+3. select ENAME, JOB, DEPTNO, SAL from EMP where sal in (select max(SAL) from EMP group by DEPTNO);
+4. select ENAME, HIREDATE, DEPTNO from emp where HIREDATE in (select min(HIREDATE) from EMP group by DEPTNO)
+5. select EMPNO, ENAME, SAL, EMP.DEPTNO, avgsal
+   from EMP inner join(select DEPTNO, avg(SAL) avgsal from EMP group by DEPTNO) tblavg on EMP.DEPTNO=tblavg.DEPTNO where SAL>tblavg.avgsal    order by DEPTNO;
+6. select e.EMPNO EMP_NUMBER, e.ENAME EMP_NAME, e.SAL EMP_SAL, m.MGR MGR_NUMBER, m.ENAME mgr_name, m.DEPTNO mgr_dept,m.SAL mgr_salary
+   from EMP e inner join EMP m on e.MGR = m.EMPNO
+
+Chương 10:
+1.create table PROJECT(PROJID number(4,0),P_DESC varchar2(20 char),P_START_DATE date,P_END_DATE date,BUDGET_AMOUNT number(7,2),
+  MAX_NO_STAFF number(2,0),check (P_END_DATE > P_START_DATE),
+  constraint "PROJECT_pk" primary key(PROJID));
+2. CREATE TABLE ASSIGNMENTS
+   (
+    "PROJID"       NUMBER(4, 0) NOT NULL ENABLE,
+    "EMPNO"        NUMBER(4, 0) NOT NULL ENABLE,
+    "A_START_DATE" DATE,
+    "A_END_DATE"   DATE,
+    "BILL_AMOUNT"  NUMBER(4, 2),
+    "ASSIGN_TYPE"  VARCHAR2(2 CHAR),
+    CONSTRAINT "ASSIGNMENTS_EMP_FK1" FOREIGN KEY ("EMPNO") REFERENCES "EMP" ("EMPNO") ON
+        DELETE CASCADE ENABLE,
+    CONSTRAINT "ASSIGNMENTS_PROJECT_FK1" FOREIGN KEY ("PROJID") REFERENCES "PROJECT" ("PROJID") ON
+        DELETE CASCADE ENABLE);
+   
