@@ -100,3 +100,18 @@ Chương 11:
 4. SELECT * FROM USER_CONSTRAINTS;
 5. SELECT TABLE_NAME FROM USER_TABLES;
    
+Chương 12:
+1.INSERT INTO PROJECT(PROJID, P_DESC, P_START_DATE, P_END_DATE, BUDGET_AMOUNT, MAX_NO_STAFF)
+  VALUES ('1', 'WRITE C030 COURSE', to_date('02-JAN-88', 'DD-MON-RR'), to_date('07-JAN-88', 'DD-MON-RR'), '500', '1');
+
+  insert into PROJECT(projid, p_desc, p_start_date, p_end_date, budget_amount, max_no_staff)
+  values ('3', 'PROOF READ NOTES', to_date('01-JAN-89', 'DD-MON-RR'), to_date('10-JAN-89', 'DD-MON-RR'), '600', '1');
+2. insert into ASSIGNMENTS(PROJID,EMPNO,A_START_DATE,A_END_DATE,BILL_AMOUNT,ASSIGN_TYPE,HOURS)
+   values('1','7369',to_date('01-JAN-88','DD-MON-RR'),to_date('03-JAN-88','DD-MON-RR'),'50','WR','15');
+
+   insert into ASSIGNMENTS(PROJID,EMPNO,A_START_DATE,A_END_DATE,BILL_AMOUNT,ASSIGN_TYPE,HOURS)
+   values('1','7902',to_date('01-JAN-88','DD-MON-RR'),to_date('07-JAN-88','DD-MON-RR'),'55','WR','20');
+
+   insert into ASSIGNMENTS(PROJID,EMPNO,A_START_DATE,A_END_DATE,BILL_AMOUNT,ASSIGN_TYPE,HOURS)
+   values('2','7844',to_date('04-JAN-88','DD-MON-RR'),to_date('10-JAN-88','DD-MON-RR'),'45.05','WR','30');
+3. UPDATE ASSIGNMENTS SET ASSIGN_TYPE='wr' WHERE ASSIGN_TYPE = 'wt'
