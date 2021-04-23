@@ -102,7 +102,7 @@ Chương 11:
 	select *
 	from information_schema.table_constraints
 	where table_name= 'assignments';
-5. SELECT TABLE_NAME FROM USER_TABLES;
+5.  SELECT tablename FROM pg_tables;
    
 Chương 12:
 1.INSERT INTO PROJECT(PROJID, P_DESC, P_START_DATE, P_END_DATE, BUDGET_AMOUNT, MAX_NO_STAFF)
