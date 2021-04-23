@@ -43,3 +43,25 @@ Chương 5:
 4. select deptno,count(*)as sumemployee from emp group by deptno having count(*)>3;
 5. select job,min(sal) from emp where job!='MANAGER' group by job;
 
+Chương 6:
+1. select ename,dname from dept,emp where emp.deptno=dept.deptno order by dname;
+2. select ename,loc,dname from emp inner join dept on emp.deptno=dept.deptno where sal>1500;
+3.  select ename,job,sal,grade from emp, salgrade where sal>=losal and sal<= hisal order by GRADE ;
+4. select ename,job,sal,(case when sal>=1401 and sal<=2000 then '3' end) GRADE from emp where (case when sal>=1401 and sal<=2000 then '3' end)='3';
+5. select ename,loc,sal from emp inner join dept on emp.deptno=dept.deptno where loc='DALLAS';
+6. select ename,job,sal,grade,dname
+   from emp inner join dept on emp.deptno=dept.deptno,salgrade
+   where (sal>=losal and sal<=hisal) and job != 'clerk'
+   order by job desc;
+7. select ename,job,(sal*12) ANUAL_SAL,emp.deptno,dname,grade
+   from emp inner join dept on emp.deptno=dept.deptno,salgrade
+   where (sal>=losal and sal<=hisal) and (sal*12)=36000 or job='clerk';
+8. select deptno,dname,loc from dept where deptno not in (select deptno from emp);
+9. Select e.ename emp_name, e.sal emp_sal, m.ename mgr_name, m.sal mgr_sal
+   from emp e, emp m
+   where e.mgr = m.empno;
+10. Select e.ename emp_name, e.sal emp_sal,m.ename mgr_name, m.sal mgr_sal from emp e left outer join emp m on e.mgr=m.empno;
+11. Select DISTINCT Job From emp Where (Extract (Year From HireDate) = 1981) AND Job Not In (Select Job From emp
+    Where Extract (Year From HireDate) = 1990 );
+12. select e.ename emp_name,to_char(e.hiredate,'DD-MM-YYYY') emp_hiredate,m.ename mgr_name, to_char(m.hiredate,'DD-MM-YYYY') mgr_hiredate  	from emp e,emp m where e.mgr=m.empno and e.hiredate
+
