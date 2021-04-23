@@ -130,6 +130,7 @@ Chương 14:
    Charcol2 varchar2(60),
    Datecol1 date,
    Datecol2 date);
+   
 Chương 18:
 1. 	DECLARE
 	    CURSOR CHECK_JOB IS
@@ -215,3 +216,6 @@ Chương 18:
 	    close QUERY_DATA;
 	    commit;
 	end;
+
+Chương 19:
+
