@@ -158,27 +158,4 @@ Chương 14:
 	);
    
 Chương 18:
-1. 	DECLARE
-	    CURSOR CHECK_JOB IS
-		SELECT JOB
-		FROM EMP;
-	    vjob   EMP.Job%TYPE;
-	    vcount NUMBER := 0;
-	BEGIN
-	    OPEN CHECK_JOB;
-	    LOOP
-		FETCH CHECK_JOB INTO vjob;
-		EXIT WHEN CHECK_JOB%NOTFOUND;
-		IF vjob = '&job_input' THEN
-		    vcount := vcount + 1;
-		END IF;
-	    END LOOP;
-	    IF vcount > 0 THEN
-	    INSERT INTO MESSAGES VALUES (0, 1, 'FOUNDED ' || vcount, 'JOB :' || '&job_input', sysdate, sysdate);
-	    ELSE
-		INSERT INTO MESSAGES VALUES (0, 0, 'NOT FOUND ' || vcount, 'JOB :' || '&job_input', sysdate, sysdate);
-	    END IF;
-	    CLOSE CHECK_JOB;
-	 COMMIT;
-	END;
-2.	
+1. 
