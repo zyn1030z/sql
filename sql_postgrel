@@ -186,3 +186,18 @@ Chương 18:
 	    CLOSE CHECK_JOB;
 	END;
 	$$ LANGUAGE plpgsql;
+	
+2.
+	CREATE FUNCTION writeTableMessage()
+	    RETURNS void
+	AS
+	$$
+	BEGIN
+	    FOR i IN 1..10
+		LOOP
+		    IF i != 6 AND i != 8 THEN
+		        INSERT INTO MESSAGES VALUES (i, default, default, default, default, default);
+		    END IF;
+		END LOOP;
+	END;
+	$$ LANGUAGE plpgsql;
