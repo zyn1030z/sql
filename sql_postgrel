@@ -342,3 +342,6 @@ Chương 20:
 	    ON emp
 	    FOR EACH ROW
 	EXECUTE PROCEDURE addDataToEmp1();
+
+2.
+
