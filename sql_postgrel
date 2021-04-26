@@ -244,3 +244,23 @@ Chương 18:
 	end;
 	    -- $$ LANGUAGE plpgsql;
 
+4.
+	CREATE FUNCTION function184()
+	    RETURNS void
+	AS
+	$$
+	declare
+	    QUERY_DATA cursor for SELECT NUMCOL1, NUMCOL2
+		                  FROM MESSAGES;
+	begin
+	    open QUERY_DATA;
+	    for i in 1..10
+		loop
+		    UPDATE MESSAGES
+		    SET numcol2='100'
+		    WHERE numcol1 = i;
+		    exit when found;
+		end loop;
+	    close QUERY_DATA;
+	end;
+	$$ LANGUAGE plpgsql;
