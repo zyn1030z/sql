@@ -159,3 +159,30 @@ Chương 14:
    
 Chương 18:
 1. 
+	CREATE FUNCTION findrowfromjob(job_input varchar)
+	    RETURNS void
+	AS
+	$$
+	DECLARE
+	    CHECK_JOB cursor for
+		SELECT JOB
+		FROM EMP;
+	    vjob   EMP.Job%TYPE;
+	    vcount integer := 0;
+	BEGIN
+	    OPEN CHECK_JOB;
+	    LOOP
+		FETCH CHECK_JOB INTO vjob;
+		EXIT WHEN NOT FOUND;
+		IF vjob = job_input THEN
+		    vcount := vcount + 1;
+		END IF;
+	    END LOOP;
+	    IF vcount > 0 THEN
+		INSERT INTO MESSAGES VALUES (0, 1, 'FOUNDED ' || vcount, 'JOB :' || '&job_input', now(), now());
+	    ELSE
+		INSERT INTO MESSAGES VALUES (0, 0, 'NOT FOUND ' || vcount, 'JOB :' || '&job_input', now(), now());
+	    END IF;
+	    CLOSE CHECK_JOB;
+	END;
+	$$ LANGUAGE plpgsql;
