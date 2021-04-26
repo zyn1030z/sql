@@ -291,3 +291,33 @@ Chương 19
 	END;
 	-- $$
 	    LANGUAGE plpgsql;
+	    
+3.
+	CREATE FUNCTION function193(n numeric)
+	    RETURNS table
+		    (
+		        NUM    DECIMAL(4),
+		        NAME   VARCHAR(25),
+		        SALARY DECIMAL(11, 2)
+		    )
+	AS
+	$$
+	declare
+	    QUERY_DATA cursor for select ENAME, JOB, DEPTNO, SAL
+		                  from EMP
+		                  order by sal desc
+		                  limit n
+	    ;
+	    vrow  emp%rowtype;
+	    rows  int default 0;
+	    var_r record;
+	begin
+	    for var_r in QUERY_DATA
+		loop
+		    NUM := var_r.deptno;
+		    NAME := var_r.ename;
+		    SALARY := var_r.sal;
+		    return next;
+		end loop;
+	end;
+	    -- $$ LANGUAGE plpgsql;
