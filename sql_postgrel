@@ -281,3 +281,13 @@ Chương 19
 	    return (rtrim(m));
 	end;
 	$$ LANGUAGE plpgsql;
+	
+2.
+	create function function192(X DECIMAL, Y
+	    VARCHAR, Z DECIMAL) returns void as
+	$$
+	BEGIN
+	    INSERT INTO MESSAGES VALUES (X, Z, Y, default, default, default);
+	END;
+	-- $$
+	    LANGUAGE plpgsql;
