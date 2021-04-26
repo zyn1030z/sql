@@ -380,3 +380,21 @@ Chương 20:
 	    deptno    decimal
 
 	);
+	
+	create or replace function function203()
+	    returns trigger
+	    language PLPGSQL
+	as
+	$$
+	BEGIN
+	    INSERT INTO backup(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+	    VALUES (OLD.empno, OLD.ename, OLD.job, OLD.mgr, OLD.hiredate, OLD.sal, OLD.comm, OLD.deptno);
+	    RETURN OLD;
+	END;
+	$$
+
+	CREATE TRIGGER add_data_203
+	    BEFORE DELETE
+	    ON emp
+	    FOR EACH ROW
+	EXECUTE PROCEDURE function203();
