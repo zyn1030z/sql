@@ -264,3 +264,20 @@ Chương 18:
 	    close QUERY_DATA;
 	end;
 	$$ LANGUAGE plpgsql;
+	
+Chương 19
+1.
+	CREATE FUNCTION function191(y numeric)
+	    RETURNS char
+	AS
+	$$
+	declare
+	    m varchar(26);
+	begin
+	    select ename into m from emp where empno = (select MGR from EMP where EMPNO = y);
+	    if not found then
+		m := 'Khong thay';
+	    end if;
+	    return (rtrim(m));
+	end;
+	$$ LANGUAGE plpgsql;
