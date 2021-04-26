@@ -321,3 +321,24 @@ Chương 19
 		end loop;
 	end;
 	    -- $$ LANGUAGE plpgsql;
+	    
+Chương 20:
+1.
+	create or replace function addDataToEmp1()
+	    returns trigger
+	    language PLPGSQL
+	as
+	$$
+	BEGIN
+	    INSERT INTO emp1(empno, ename, job)
+	    VALUES (NEW.empno, NEW.ename, NEW.job);
+	    RETURN NEW;
+	END;
+	$$
+
+
+	CREATE TRIGGER add_data
+	    BEFORE INSERT
+	    ON emp
+	    FOR EACH ROW
+	EXECUTE PROCEDURE addDataToEmp1();
