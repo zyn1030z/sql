@@ -201,3 +201,46 @@ Chương 18:
 		END LOOP;
 	END;
 	$$ LANGUAGE plpgsql;
+	
+3.
+	CREATE FUNCTION function183(vempno numeric)
+	    RETURNS void
+	AS
+	$$
+	declare
+	--     vempno    integer := '2';
+	    QUERY_DATA cursor for SELECT *
+		                  FROM EMP
+		                  WHERE EMPNO = vempno;
+	    vrow      emp%rowtype;
+	    vname     varchar(6);
+	    vsal      varchar(6);
+	    vhiredate varchar(6);
+	begin
+	    open QUERY_DATA;
+	    loop
+		fetch QUERY_DATA into vrow;
+		exit when not found;
+		if vrow.SAL > 1200 then
+		    vsal := 'TRUE';
+		else
+		    vsal := 'FALSE';
+		end if;
+		if vrow.ENAME like '%T%' then
+		    vname := 'TRUE';
+		else
+		    vname := 'FALSE';
+		end if;
+		if extract(month from vrow.HIREDATE) = 12 then
+		    vhiredate := 'TRUE';
+		else
+		    vhiredate := 'FALSE';
+		end if;
+		INSERT INTO MESSAGES
+		VALUES (default, vempno, ' SALARY > 1200 ?: ' || vsal || ' ,ENAME_EMPLOY CONTRAINT T ?: ' || vname,
+		        ' ,MONTH OF HIREDATE IS 12(DEC) ?: ' || vhiredate, default, default);
+	    end loop;
+	    close QUERY_DATA;
+	end;
+	    -- $$ LANGUAGE plpgsql;
+
