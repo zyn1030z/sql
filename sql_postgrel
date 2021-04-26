@@ -366,3 +366,17 @@ Chương 20:
 	    ON emp
 	    FOR EACH ROW
 	EXECUTE PROCEDURE function202();
+	
+3.
+	CREATE TABLE backup
+	(
+	    empno    decimal,
+	    ename    VARCHAR(40) NOT NULL,
+	    job      VARCHAR(40) NOT NULL,
+	    mgr      VARCHAR(40) NOT NULL,
+	    hiredate date,
+	    sal    integer,
+	    comm    integer,
+	    deptno    decimal
+
+	);
