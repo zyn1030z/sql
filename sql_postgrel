@@ -344,4 +344,25 @@ Chương 20:
 	EXECUTE PROCEDURE addDataToEmp1();
 
 2.
+	create or replace function function202()
+	    returns trigger
+	    language PLPGSQL
+	as
+	$$
+	BEGIN
+	    UPDATE dept
+	    SET sumsal = (
+		select sum(sal)
+		from emp
+		         inner join dept on emp.deptno = dept.deptno
+	    )
+	    where deptno = NEW.deptno;
+	    RETURN NEW;
+	END;
+	$$
 
+	CREATE TRIGGER add_data_202
+	    BEFORE UPDATE
+	    ON emp
+	    FOR EACH ROW
+	EXECUTE PROCEDURE function202();
