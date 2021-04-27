@@ -353,14 +353,17 @@ Chương 20:
 	as
 	$$
 	BEGIN
-	    UPDATE dept
-	    SET sumsal = (
-		select sum(sal)
-		from emp
-		         inner join dept on emp.deptno = dept.deptno
-	    )
-	    where deptno = NEW.deptno;
-	    RETURN NEW;
+	    if length(NEW.ename) < 3 then RAISE EXCEPTION 'ename must > 3';
+	    else
+		UPDATE dept
+		SET sumsal = (
+		    select sum(sal)
+		    from emp
+		             inner join dept on emp.deptno = dept.deptno
+		)
+		where deptno = NEW.deptno;
+		RETURN NEW;
+	    end if;
 	END;
 	$$
 
