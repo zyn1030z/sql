@@ -312,13 +312,16 @@ Chương 19
 	    rows  int default 0;
 	    var_r record;
 	begin
-	    for var_r in QUERY_DATA
-		loop
-		    NUM := var_r.deptno;
-		    NAME := var_r.ename;
-		    SALARY := var_r.sal;
-		    return next;
-		end loop;
+	    if n <0 then RAISE EXCEPTION 'n must > 0';
+	    else
+		for var_r in QUERY_DATA
+		    loop
+		        NUM := var_r.deptno;
+		        NAME := var_r.ename;
+		        SALARY := var_r.sal;
+		        return next;
+		    end loop;
+	    end if;
 	end;
 	    -- $$ LANGUAGE plpgsql;
 	    
