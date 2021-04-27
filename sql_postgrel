@@ -333,9 +333,12 @@ Chương 20:
 	as
 	$$
 	BEGIN
-	    INSERT INTO emp1(empno, ename, job)
-	    VALUES (NEW.empno, NEW.ename, NEW.job);
-	    RETURN NEW;
+	    if length(NEW.ename) < 3 then RAISE EXCEPTION 'ename must > 3';
+	    else
+		INSERT INTO emp1(empno, ename, job)
+		VALUES (NEW.empno, NEW.ename, NEW.job);
+		RETURN NEW;
+	    end if;
 	END;
 	$$
 
