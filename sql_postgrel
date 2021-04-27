@@ -398,3 +398,25 @@ Chương 20:
 	    ON emp
 	    FOR EACH ROW
 	EXECUTE PROCEDURE function203();
+
+4.
+	CREATE OR REPLACE FUNCTION process_emp_audit() RETURNS TRIGGER AS $emp_audit$
+	    BEGIN
+		IF (TG_OP = 'DELETE') THEN
+		    INSERT INTO messages(charcol1, datecol2)
+		    VALUES ('D',now());
+		ELSIF (TG_OP = 'UPDATE') THEN
+		    INSERT INTO messages(charcol1, datecol2)
+		    VALUES ('U',now());
+		    RETURN NEW;
+		ELSIF (TG_OP = 'INSERT') THEN
+		    INSERT INTO messages(charcol1, datecol2)
+		    VALUES ('I',now());
+		END IF;
+		RETURN NULL;
+	    END;
+	$emp_audit$ LANGUAGE plpgsql;
+
+	CREATE TRIGGER emp_audit
+	AFTER INSERT OR UPDATE OR DELETE ON emp
+	    FOR EACH ROW EXECUTE PROCEDURE process_emp_audit();
